@@ -21,7 +21,7 @@ function App() {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    // console.log(events, "events");
+    console.log(events, "events");
   }, [events]);
 
   const transformEvents = (events) => {
@@ -61,10 +61,6 @@ function App() {
         fetchCalendarEvent(response?.data?.data?.email, startDate, endDate);
       }
 
-      // if (response?.data?.length > 0) {
-      //   console.log(transformEvents(response?.data), "transformEvents");
-      //   setEvent(transformEvents(response?.data));
-      // }
     } catch (error) {
       console.error("Error during google verification", error);
     }
@@ -90,7 +86,6 @@ function App() {
 
   const handleNavigate = (newDate, view) => {
     let startDate, endDate;
-    console.log(newDate, view, "view");
     if (view === "month") {
       startDate = moment(newDate).startOf("month").format("DD-MM-YYYY");
       endDate = moment(newDate).endOf("month").format("DD-MM-YYYY");
@@ -113,7 +108,6 @@ function App() {
         "http://localhost:3001/auth/add-calendar-id",
         { email: user?.email, newCalendarId }
       );
-      console.log(response, "response");
       if (response?.data?.status) {
         setNewCalendarId("");
         setUser(response?.data?.data);
