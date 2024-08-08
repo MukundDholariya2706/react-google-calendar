@@ -18,11 +18,10 @@ function App() {
   const [endDate, setEndDate] = useState(
     moment().endOf("month").format("DD-MM-YYYY")
   );
-  const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    console.log(events, "events");
-  }, [events]);
+    console.log(event, "event");
+  }, [event]);
 
   const transformEvents = (events) => {
     return events.map((event, index) => {
