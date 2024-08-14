@@ -20,8 +20,12 @@ function App() {
   );
 
   useEffect(() => {
-    console.log(event, "event");
-  }, [event]);
+    const user = localStorage.getItem("user");
+    if (JSON.parse(user)?.email) {
+      setUser(JSON.parse(user));
+      fetchCalendarEvent(JSON.parse(user)?.email, startDate, endDate);
+    }
+  }, []);
 
   const transformEvents = (events) => {
     return events.map((event, index) => {
@@ -55,11 +59,11 @@ function App() {
         }
       );
 
-      setUser(response?.data?.data);
       if (response.status) {
+        setUser(response?.data?.data);
+        localStorage.setItem("user", JSON.stringify(response?.data?.data));
         fetchCalendarEvent(response?.data?.data?.email, startDate, endDate);
       }
-
     } catch (error) {
       console.error("Error during google verification", error);
     }
@@ -103,6 +107,8 @@ function App() {
 
   const handleAddCalendarId = async () => {
     try {
+      if (!newCalendarId) return;
+
       const response = await axios.post(
         "http://localhost:3001/auth/add-calendar-id",
         { email: user?.email, newCalendarId }
@@ -121,7 +127,13 @@ function App() {
       <div className="calendar-container">
         {!user?.email && (
           <button onClick={googleLogin} className="btn btn-icon">
-            <img width={18} height={18} src={GoogleSvg} alt="Google Logo" className="google-icon" />
+            <img
+              width={18}
+              height={18}
+              src={GoogleSvg}
+              alt="Google Logo"
+              className="google-icon"
+            />
             <span>Config Google Calendar</span>
           </button>
         )}
@@ -161,10 +173,10 @@ function App() {
                   placeholder="Enter new calendar ID"
                   className="input-field"
                 />
+                <button onClick={handleAddCalendarId} className="btn btn-add">
+                  Add Calendar ID
+                </button>
               </div>
-              <button onClick={handleAddCalendarId} className="btn btn-add">
-                Add Calendar ID
-              </button>
             </div>
             <div className="fetch-event">
               <button
