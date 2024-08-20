@@ -89,14 +89,14 @@ function App() {
   const handleNavigate = (newDate, view) => {
     let startDate, endDate;
     if (view === "month") {
-      startDate = moment(newDate).startOf("month").format("DD-MM-YYYY");
-      endDate = moment(newDate).endOf("month").format("DD-MM-YYYY");
+      startDate = moment(newDate).startOf("month").utc()
+      endDate = moment(newDate).endOf("month").utc()
     } else if (view === "week") {
-      startDate = moment(newDate).startOf("week").format("DD-MM-YYYY");
-      endDate = moment(newDate).endOf("week").format("DD-MM-YYYY");
+      startDate = moment(newDate).startOf("week").utc()
+      endDate = moment(newDate).endOf("week").utc()
     } else if (view === "day") {
-      startDate = moment(newDate).startOf("day").format("DD-MM-YYYY");
-      endDate = moment(newDate).endOf("day").format("DD-MM-YYYY");
+      startDate = moment(newDate).startOf("day").utc()
+      endDate = moment(newDate).endOf("day").utc()
     }
     setStartDate(startDate);
     setEndDate(endDate);
